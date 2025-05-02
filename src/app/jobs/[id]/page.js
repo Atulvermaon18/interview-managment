@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { jobsData } from './../../data/mockData';
+import { jobsData } from './../../../data/mockData';
 
 export default function JobDetails({ params }) {
   const router = useRouter();
