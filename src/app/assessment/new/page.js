@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import SectionQuestionsModal from '@/components/SectionQuestionsModal';
+import SectionQuestionsModal from './../../../components/SectionQuestionsModal';
 
 export default function NewAssessment() {
   const router = useRouter();

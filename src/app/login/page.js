@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect, Suspense } from 'react';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from './../../contexts/AuthContext';
 import { useSearchParams, useRouter } from 'next/navigation';
 
 const LoginForm = () => {

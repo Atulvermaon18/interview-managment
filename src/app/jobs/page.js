@@ -1,6 +1,6 @@
 'use client';
 import { useRouter } from 'next/navigation';
-import { jobsData } from '@/data/mockData';
+import { jobsData } from './../../data/mockData';
 
 const JobsPage = () => {
   const router = useRouter();

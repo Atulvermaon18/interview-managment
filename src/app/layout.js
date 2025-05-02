@@ -1,9 +1,10 @@
 'use client';
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import Sidebar from "@/components/Sidebar";
-import Header from "@/components/Header";
-import { AuthProvider } from '@/contexts/AuthContext';
+import Sidebar from "./../components/Sidebar";
+import Header from "./../components/Header";
+import { AuthProvider } from './../contexts/AuthContext';
+import { usePathname } from 'next/navigation';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,21 +17,28 @@ const geistMono = Geist_Mono({
 });
 
 export default function RootLayout({ children }) {
+  const pathname = usePathname();
+  const isLoginPage = pathname === '/login';
+
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50`}
       >
         <AuthProvider>
-          <div className="flex h-screen">
-            <Sidebar />
-            <div className="flex-1 flex flex-col">
-              <Header />
-              <main className="flex-1 overflow-auto">
-                {children}
-              </main>
+          {isLoginPage ? (
+            <main>{children}</main>
+          ) : (
+            <div className="flex h-screen">
+              <Sidebar />
+              <div className="flex-1 flex flex-col">
+                <Header />
+                <main className="flex-1 overflow-auto">
+                  {children}
+                </main>
+              </div>
             </div>
-          </div>
+          )}
         </AuthProvider>
       </body>
     </html>

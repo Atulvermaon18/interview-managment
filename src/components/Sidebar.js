@@ -6,7 +6,7 @@ const Sidebar = () => {
   const pathname = usePathname();
 
   const menuItems = [
-    { name: 'Home', path: '/' },
+    { name: 'Home', path: '/home' },
     { name: 'Jobs', path: '/jobs' },
     { name: 'Skill Analysis', path: '/skill-analysis' },
     { name: 'Interview Stages', path: '/interview-stages' },

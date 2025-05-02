@@ -1,7 +1,7 @@
 'use client';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import SampleQuestionsModal from '@/components/SampleQuestionsModal';
+import SampleQuestionsModal from './../../../components/SampleQuestionsModal';
 
 const InterviewStageDetails = ({ params }) => {
   const router = useRouter();
