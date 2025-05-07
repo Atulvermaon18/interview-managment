@@ -4,6 +4,8 @@ export const jobsData = [
     title: "Finance Analyst",
     status: "Open",
     createdOn: "01-01-2025",
+    openPositions: 2,
+    candidates: 12,
     requirements: [
       "Bachelor's degree in Finance or related field",
       "5+ years of experience in financial analysis",
@@ -16,6 +18,8 @@ export const jobsData = [
     title: "Java Developer",
     status: "Open",
     createdOn: "02-05-2025",
+    openPositions: 3,
+    candidates: 8,
     requirements: [
       "5+ years experience in Java development",
       "Strong knowledge of Spring Boot",
@@ -28,6 +32,8 @@ export const jobsData = [
     title: "Marketing Head",
     status: "Open",
     createdOn: "02-08-2025",
+    openPositions: 1,
+    candidates: 15,
     requirements: [
       "10+ years of marketing experience",
       "Proven track record in digital marketing",
@@ -40,6 +46,8 @@ export const jobsData = [
     title: "Technical Solution Architect",
     status: "Closed",
     createdOn: "01-10-2025",
+    openPositions: 1,
+    candidates: 6,
     requirements: [
       "12+ years of technical experience",
       "Experience in cloud architecture",
