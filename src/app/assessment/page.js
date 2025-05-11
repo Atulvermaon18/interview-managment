@@ -1,160 +1,147 @@
 'use client';
-import { useState } from 'react';
-import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 const assessmentData = [
   {
     id: 1,
-    name: 'Java Technical Test',
-    category: 'Skill Analysis',
-    associatedWith: 'Java',
+    name: 'Java Technical Assessment',
+    type: 'Technical',
+    candidates: 15,
+    avgScore: 78,
+    duration: '60 min',
+    lastUpdated: '2024-03-15',
     status: 'Active'
   },
   {
     id: 2,
-    name: 'Spring Boot Coding Challenge',
-    category: 'Job',
-    associatedWith: 'Senior Java Developer',
+    name: 'React Coding Challenge',
+    type: 'Coding',
+    candidates: 12,
+    avgScore: 82,
+    duration: '90 min',
+    lastUpdated: '2024-03-14',
     status: 'Active'
   },
   {
     id: 3,
-    name: 'Database Knowledge Test',
-    category: 'Skill Analysis',
-    associatedWith: 'MYSQL',
-    status: 'In Progress'
-  },
-  {
-    id: 4,
-    name: 'Employee Leadership Survey',
-    category: 'Employee Group',
-    associatedWith: 'Team Leads',
-    status: 'Completed'
-  },
-  {
-    id: 5,
-    name: 'Candidate Aptitude Test',
-    category: 'Candidate Group',
-    associatedWith: 'Software Engineer Batch',
+    name: 'System Design Interview',
+    type: 'Technical',
+    candidates: 8,
+    avgScore: 75,
+    duration: '45 min',
+    lastUpdated: '2024-03-13',
     status: 'Active'
-  },
-  {
-    id: 6,
-    name: 'Cloud Computing Proficiency',
-    category: 'Employee',
-    associatedWith: 'John Doe',
-    status: 'In Progress'
   }
 ];
 
 export default function AssessmentPage() {
-  const [searchTerm, setSearchTerm] = useState('');
-
-  const getStatusColor = (status) => {
-    switch (status.toLowerCase()) {
-      case 'active':
-        return 'bg-green-100 text-green-800';
-      case 'in progress':
-        return 'bg-yellow-100 text-yellow-800';
-      case 'completed':
-        return 'bg-blue-100 text-blue-800';
-      default:
-        return 'bg-gray-100 text-gray-800';
-    }
-  };
-
-  const filteredAssessments = assessmentData.filter(assessment =>
-    assessment.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    assessment.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    assessment.associatedWith.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const router = useRouter();
 
   return (
     <div className="flex flex-col h-full">
-      <div className="flex justify-between items-center mb-6 px-6 pt-6">
-        <h1 className="text-2xl font-semibold text-gray-900">Assessment</h1>
-        <div className="flex items-center space-x-4">
-          <div className="relative">
-            <input
-              type="text"
-              placeholder="Search..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-64 pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500 focus:border-blue-500"
-            />
-            <div className="absolute left-3 top-2.5">
-              <svg className="h-5 w-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-            </div>
+      {/* Breadcrumb */}
+      <div className="px-6 pt-6">
+        <nav className="text-sm text-gray-500 mb-2" aria-label="Breadcrumb">
+          <ol className="list-reset flex">
+            <li>
+              <span className="hover:underline cursor-pointer text-gray-500">Dashboard</span>
+            </li>
+            <li>
+              <span className="mx-2">&gt;</span>
+            </li>
+            <li className="text-gray-900 font-medium">Assessments</li>
+          </ol>
+        </nav>
+      </div>
+
+      {/* Header */}
+      <div className="flex justify-between items-center mb-4 px-6">
+        <h1 className="text-2xl font-semibold text-gray-900">Assessments</h1>
+        <button 
+          onClick={() => router.push('/assessment/new')}
+          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 flex items-center font-medium"
+        >
+          <span className="mr-2 text-lg">+</span> New Assessment
+        </button>
+      </div>
+
+      {/* Search and Filter */}
+      <div className="flex items-center gap-4 px-6 mb-2">
+        <div className="relative flex-1">
+          <input
+            type="text"
+            placeholder="Search assessments..."
+            className="w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-100 text-sm bg-gray-50"
+          />
+          <svg className="absolute left-3 top-2.5 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <circle cx="11" cy="11" r="8" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M21 21l-2-2" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </div>
+        <button className="flex items-center px-3 py-2 border border-gray-200 rounded-lg bg-white text-gray-700 text-sm font-medium hover:bg-gray-50">
+          <svg className="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 6h18M6 12h12M9 18h6" />
+          </svg>
+          Filter
+        </button>
+      </div>
+
+      {/* Table */}
+      <div className="px-6">
+        <div className="bg-white rounded-lg border border-blue-200">
+          <div className="overflow-x-auto">
+            <table className="min-w-full divide-y divide-gray-200">
+              <thead>
+                <tr>
+                  <th className="px-6 py-3 text-left text-sm font-medium text-gray-500">Name</th>
+                  <th className="px-6 py-3 text-left text-sm font-medium text-gray-500">Type</th>
+                  <th className="px-6 py-3 text-left text-sm font-medium text-gray-500">Candidates</th>
+                  <th className="px-6 py-3 text-left text-sm font-medium text-gray-500">Avg Score</th>
+                  <th className="px-6 py-3 text-left text-sm font-medium text-gray-500">Duration</th>
+                  <th className="px-6 py-3 text-left text-sm font-medium text-gray-500">Last Updated</th>
+                  <th className="px-6 py-3 text-left text-sm font-medium text-gray-500">Status</th>
+                  <th className="px-3 py-3 text-right text-sm font-medium text-gray-500"></th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {assessmentData.map((assessment) => (
+                  <tr key={assessment.id} className="hover:bg-gray-50 cursor-pointer" onClick={() => router.push(`/assessment/${assessment.id}`)}>
+                    <td className="px-6 py-4 text-sm font-medium text-gray-900">{assessment.name}</td>
+                    <td className="px-6 py-4">
+                      <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-md bg-blue-100 text-blue-800">
+                        {assessment.type}
+                      </span>
+                    </td>
+                    <td className="px-6 py-4 text-sm text-gray-900">{assessment.candidates}</td>
+                    <td className="px-6 py-4 text-sm text-gray-900">{assessment.avgScore}%</td>
+                    <td className="px-6 py-4 text-sm text-gray-900">{assessment.duration}</td>
+                    <td className="px-6 py-4 text-sm text-gray-500">{assessment.lastUpdated}</td>
+                    <td className="px-6 py-4">
+                      <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-md ${assessment.status === 'Active' ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-800'}`}>{assessment.status}</span>
+                    </td>
+                    <td className="px-3 py-4 text-right">
+                      <button className="p-2 rounded-full hover:bg-gray-100">
+                        <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <circle cx="12" cy="6" r="1.5" />
+                          <circle cx="12" cy="12" r="1.5" />
+                          <circle cx="12" cy="18" r="1.5" />
+                        </svg>
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
-          <Link
-            href="/assessment/new"
-            className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 flex items-center"
-          >
-            New Assessment
-          </Link>
         </div>
       </div>
 
-      <div className="px-6">
-        <div className="bg-white rounded-lg shadow overflow-hidden">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-[#A4BE7B]">
-              <tr>
-                <th className="px-6 py-3 text-left text-sm font-semibold text-white">Assessment Name</th>
-                <th className="px-6 py-3 text-left text-sm font-semibold text-white">Category</th>
-                <th className="px-6 py-3 text-left text-sm font-semibold text-white">Associated With</th>
-                <th className="px-6 py-3 text-left text-sm font-semibold text-white">Status</th>
-                <th className="px-6 py-3 text-left text-sm font-semibold text-white">Actions</th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {filteredAssessments.map((assessment) => (
-                <tr
-                  key={assessment.id}
-                  className="hover:bg-gray-50"
-                >
-                  <td className="px-6 py-4">
-                    <div className="text-sm font-medium text-blue-600">
-                      {assessment.name}
-                    </div>
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="text-sm text-gray-900">{assessment.category}</div>
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="text-sm text-blue-600 hover:underline">
-                      {assessment.associatedWith}
-                    </div>
-                  </td>
-                  <td className="px-6 py-4">
-                    <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getStatusColor(assessment.status)}`}>
-                      {assessment.status}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4">
-                    <div className="flex space-x-3">
-                      <Link
-                        href={`/assessment/${assessment.id}`}
-                        className="text-blue-600 hover:text-blue-800 text-sm font-medium"
-                      >
-                        View
-                      </Link>
-                      <button
-                        className="text-red-600 hover:text-red-800 text-sm font-medium"
-                        onClick={() => {
-                          // Handle delete
-                        }}
-                      >
-                        Delete
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+      {/* Pagination and Summary */}
+      <div className="flex items-center justify-between px-6 py-4 text-sm text-gray-500">
+        <div>Showing 1 – {assessmentData.length} of {assessmentData.length}</div>
+        <div className="flex gap-2">
+          <button className="px-3 py-1 rounded bg-gray-100 text-gray-400" disabled>Prev</button>
+          <button className="px-3 py-1 rounded bg-gray-100 text-gray-400" disabled>Next</button>
         </div>
       </div>
     </div>
